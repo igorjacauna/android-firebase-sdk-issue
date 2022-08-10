@@ -1,12 +1,9 @@
 package com.mlz.discovery;
 
 import com.google.firebase.inappmessaging.FirebaseInAppMessaging;
-import com.google.firebase.inappmessaging.FirebaseInAppMessagingDisplay;
 
 import com.facebook.react.ReactActivity;
 import android.util.Log;
-
-import com.mlz.discovery.CustomizeInAppMessage;
 
 public class MainActivity extends ReactActivity {
 
@@ -14,7 +11,8 @@ public class MainActivity extends ReactActivity {
   public void onResume() {
       super.onResume();
       Log.e("MESSAGE", "activity started");
-      CustomizeInAppMessage custom = new CustomizeInAppMessage(); 
+      MainApplication mainApplication = (MainApplication) this.getApplication();
+      CustomizeInAppMessage custom = mainApplication.inAppMessagePackage.inAppMessageManager;;
       FirebaseInAppMessaging.getInstance().setMessageDisplayComponent(custom);
       Log.e("MESSAGE", "CustomizeInAppMessage registered");
   }

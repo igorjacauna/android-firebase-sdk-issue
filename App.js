@@ -16,7 +16,6 @@ import {
   Button,
   NativeModules,
   NativeEventEmitter,
-  Platform,
 } from 'react-native';
 
 import inAppMessaging from '@react-native-firebase/in-app-messaging';
@@ -32,16 +31,8 @@ const App = () => {
     /**
      * Here, when we receive a message, we always call mark impression detected
      */
+    console.log('Marking as Impression detected', mes);
     InAppMessageManager.markAsImpressionDetected(mes.messageId);
-
-    /**
-     * Workaround to message stack works when only mark as read
-     */
-    if (Platform.OS === 'ios') {
-      // Uncomment below to get next message when press button again
-      // InAppMessageManager.markAsClicked(mes.messageId);
-    }
-
   };
 
   const setListener = useCallback(() => {
@@ -54,9 +45,11 @@ const App = () => {
   }, []);
 
   const fireEvent = () => {
-    console.log('Firing event');
     setMessageReceived('');
-    inAppMessaging().triggerEvent('firebase_iam_event');
+    console.log('Firing event 1');
+    inAppMessaging().triggerEvent('session_start');
+    console.log('Firing event 2');
+    inAppMessaging().triggerEvent('second_event');
   };
 
   useEffect(() => {
@@ -65,15 +58,15 @@ const App = () => {
 
   return (
     <SafeAreaView>
-      <StatusBar/>
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic">
+      <StatusBar />
+      <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View>
-          <Button title="Click here to fire IAM event and receive a message" onPress={fireEvent} />
+          <Button
+            title="Click here to fire IAM events and receive the messages"
+            onPress={fireEvent}
+          />
         </View>
-        <Text>
-          Message received: {messageReceived}
-        </Text>
+        <Text>Message received: {messageReceived}</Text>
       </ScrollView>
     </SafeAreaView>
   );
