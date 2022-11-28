@@ -1,5 +1,7 @@
 package com.mlz.discovery;
 
+import android.os.Bundle;
+
 import com.google.firebase.inappmessaging.FirebaseInAppMessaging;
 
 import com.facebook.react.ReactActivity;
@@ -10,11 +12,11 @@ public class MainActivity extends ReactActivity {
   @Override
   public void onResume() {
       super.onResume();
-      Log.e("MESSAGE", "activity started");
+      Log.i("FIAM", "activity started");
       MainApplication mainApplication = (MainApplication) this.getApplication();
       CustomizeInAppMessage custom = mainApplication.inAppMessagePackage.inAppMessageManager;;
       FirebaseInAppMessaging.getInstance().setMessageDisplayComponent(custom);
-      Log.e("MESSAGE", "CustomizeInAppMessage registered");
+      Log.i("FIAM", "CustomizeInAppMessage registered");
   }
 
   /**
@@ -24,5 +26,10 @@ public class MainActivity extends ReactActivity {
   @Override
   protected String getMainComponentName() {
     return "IAMFirebase";
+  }
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(null);
   }
 }

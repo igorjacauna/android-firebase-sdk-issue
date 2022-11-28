@@ -52,6 +52,7 @@ public class CustomizeInAppMessage extends ReactContextBaseJavaModule implements
       FirebaseInAppMessagingDisplayCallbacks callbacks
   ) {
       try {
+            Log.i("FIAM", "displayMessage");          
             String campaignId = inAppMessage.getCampaignMetadata().getCampaignId();
             HashMap<String, Object> inAppMessageObject = new HashMap<String, Object>();
             inAppMessageObject.put("message", inAppMessage);
